@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Mon Univers Créatif</title>
+
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --cream: #f5f1eb;
+    --sand: #e8e0d0;
+    --gold: #c9a84c;
+    --rust: #b5451b;
+    --muted: #7a7060;
+    --white: #fefcf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 4rem;
+    background: rgba(245,241,235,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--sand);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; letter-spacing: .02em;
+  }
+  .logo span { color: var(--rust); font-style: italic; }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a {
+    text-decoration: none; color: var(--ink);
+    font-size: .85rem; font-weight: 500; letter-spacing: .08em;
+    text-transform: uppercase;
+    position: relative; padding-bottom: 3px;
+    transition: color .3s;
+  }
+  nav ul a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1.5px; background: var(--rust);
+    transition: width .35s ease;
+  }
+  nav ul a:hover { color: var(--rust); }
+  nav ul a:hover::after { width: 100%; }
+
+  
+  #accueil {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 5rem;
+    animation: fadeUp .9s ease both;
+  }
+  .hero-label {
+    font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 1.8rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.12; margin-bottom: 1.6rem;
+  }
+  h1 em { color: var(--rust); font-style: italic; }
+  .hero-bio {
+    font-size: 1.05rem; line-height: 1.75;
+    color: var(--muted); max-width: 440px; margin-bottom: 2.8rem;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: .85rem 2.2rem;
+    background: var(--ink); color: var(--white);
+    text-decoration: none; font-size: .85rem;
+    font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    transition: background .3s, transform .2s;
+    border: 2px solid var(--ink);
+  }
+  .btn-primary:hover { background: var(--rust); border-color: var(--rust); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-block;
+    padding: .85rem 2.2rem; margin-left: 1rem;
+    border: 2px solid var(--ink); color: var(--ink);
+    text-decoration: none; font-size: .85rem;
+    font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    transition: all .3s;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--white); }
+
+  .hero-visual {
+    position: relative;
+    background: var(--ink);
+    overflow: hidden;
+    animation: fadeIn 1.2s ease both .2s;
+  }
+  .hero-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a1612 0%, #2d2318 50%, #0f0e0c 100%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 50%, rgba(201,168,76,.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(181,69,27,.08) 0%, transparent 40%);
+  }
+  .hero-initials {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(8rem, 15vw, 14rem);
+    color: rgba(201,168,76,.1);
+    font-style: italic; user-select: none; white-space: nowrap;
+    animation: float 6s ease-in-out infinite;
+  }
+  .hero-badge {
+    position: absolute; bottom: 3rem; right: 3rem;
+    width: 120px; height: 120px;
+    border: 1px solid rgba(201,168,76,.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    color: var(--gold); font-size: .65rem; letter-spacing: .15em;
+    text-transform: uppercase; line-height: 1.6;
+    animation: spin 20s linear infinite;
+  }
+
+  
+  section { padding: 7rem 5rem; }
+  .section-tag {
+    display: inline-block;
+    font-size: .75rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 3.5rem; max-width: 600px;
+  }
+
+  
+  #competences { background: var(--white); }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    padding: 2rem; border: 1px solid var(--sand);
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+    position: relative; overflow: hidden;
+    animation: fadeUp .6s ease both;
+  }
+  .skill-card:hover {
+    border-color: var(--rust);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(181,69,27,.08);
+  }
+  .skill-card::before {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--rust), var(--gold));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .4s ease;
+  }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-icon {
+    font-size: 1.8rem; margin-bottom: 1rem;
+  }
+ 
+  
+  .skill-desc { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+  .skill-bar {
+    margin-top: 1.2rem; height: 2px; background: var(--sand); border-radius: 2px;
+  }
+  .skill-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--rust), var(--gold));
+    border-radius: 2px;
+    animation: barGrow 1s ease both .5s;
+    transform-origin: left;
+  }
+
+  
+  #projets { background: var(--cream); }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  .project-card {
+    background: var(--white); overflow: hidden;
+    border: 1px solid var(--sand);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(15,14,12,.1); }
+  .project-thumb {
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative; overflow: hidden;
+  }
+  .project-thumb.t1 { background: linear-gradient(135deg, #1a1612, #2d2318); }
+  .project-thumb.t2 { background: linear-gradient(135deg, #1c1a28, #2a2040); }
+  .project-thumb.t3 { background: linear-gradient(135deg, #1a2218, #2a3820); }
+  .project-body { padding: 1.8rem; }
+  .project-tag {
+    font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: .7rem;
+  }
+  .project-title {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: .8rem;
+  }
+  .project-desc { font-size: .9rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.5rem; }
+  .project-link {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .82rem; font-weight: 500; color: var(--ink);
+    text-decoration: none; letter-spacing: .06em; text-transform: uppercase;
+    transition: color .3s, gap .3s;
+  }
+  .project-link:hover { color: var(--rust); gap: .8rem; }
+  .project-link::after { content: '→'; }
+
+  
+  #formations { background: var(--ink); color: var(--white); }
+  #formations .section-tag { color: var(--gold); }
+  #formations .section-title { color: var(--white); }
+  .timeline { max-width: 720px; }
+  .timeline-item {
+    display: grid; grid-template-columns: 140px 1fr;
+    gap: 2rem; margin-bottom: 3.5rem;
+    animation: fadeUp .7s ease both;
+  }
+  .timeline-year {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    color: rgba(201,168,76,.25); font-style: italic; padding-top: .2rem;
+  }
+  .timeline-content { padding-left: 2rem; border-left: 1px solid rgba(255,255,255,.1); }
+  .timeline-title {
+    font-family: 'Playfair Display', serif; font-size: 1.2rem;
+    margin-bottom: .4rem; color: var(--white);
+  }
+  .timeline-sub { font-size: .88rem; color: var(--gold); margin-bottom: .8rem; }
+  .timeline-desc { font-size: .9rem; color: rgba(255,255,255,.5); line-height: 1.7; }
+
+  
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+  .contact-info p {
+    font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem;
+  }
+  .contact-detail {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.2rem; font-size: .9rem;
+  }
+  .contact-detail .icon {
+    width: 40px; height: 40px; background: var(--sand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 1.4rem; }
+  .form-group { display: flex; flex-direction: column; gap: .5rem; }
+  label { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+  input, textarea {
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--sand); background: var(--cream);
+    font-family: 'DM Sans', sans-serif; font-size: .95rem;
+    color: var(--ink); outline: none;
+    transition: border-color .3s;
+  }
+  input:focus, textarea:focus { border-color: var(--rust); }
+  textarea { resize: vertical; min-height: 130px; }
+  .btn-submit {
+    padding: 1rem 2.5rem; background: var(--rust);
+    border: none; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: .88rem;
+    font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    cursor: pointer; transition: background .3s, transform .2s;
+    align-self: flex-start;
+  }
+  .btn-submit:hover { background: var(--ink); transform: translateY(-2px); }
+
+  
+  footer {
+    background: var(--ink); color: rgba(255,255,255,.4);
+    padding: 2.5rem 5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .82rem;
+  }
+  footer .logo { color: var(--white); }
+
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes float {
+    0%,100% { transform: translate(-50%,-50%) translateY(0); }
+    50%      { transform: translate(-50%,-50%) translateY(-18px); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+  }
+  @keyframes barGrow {
+    from { transform: scaleX(0); } to { transform: scaleX(1); }
+  }
+
+  
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+
+  @media (max-width: 900px) {
+    #accueil { grid-template-columns: 1fr; }
+    .hero-visual { min-height: 320px; }
+    .hero-text { padding: 5rem 2rem 3rem; }
+    nav { padding: 1.2rem 2rem; }
+    nav ul { gap: 1.5rem; }
+    section { padding: 5rem 2rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Mon<span>Portfolio</span></div>
+  <ul>
+    <li><a href="#accueil">Accueil</a></li>
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#formations">Formations</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+
+<section id="accueil">
+  <div class="hero-text">
+    <p class="hero-label">✦ Portfolio personnel</p>
+    <h1>Créatif,<br>Passionné &<br><em>Ambitieux</em></h1>
+    <p class="hero-bio">
+      Bienvenue sur mon portfolio. Je m'appelle BELKHIS Ourida j'ai 21 ans, etudiante en deuxieme annee licence , passionnée par l'informatique et les nouvelles technologies  
+      .J'aime apprendre de nouvelles compétances dans le domaine du developpement web , de la programmation et des systeme informatique  .
+      Je suis une personne motivée ,serieuse et céative .
+       Découvrez mes compétences, mes projets et mon parcours.
+    </p>
+    <div>
+      <a href="#projets" class="btn-primary">Voir mes projets</a>
+      <a href="#contact" class="btn-outline">Me contacter</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-pattern"></div>
+    <div class="hero-initials"  >  <img src="image/maphoto.png" alt="photo "></div>
+    
+  </div>
+</section>
+
+
+<section id="competences">
+  <p class="section-tag">✦ Ce que je maîtrise</p>
+  <h2 class="section-title">Mes Compétences</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">💻</div>
+      <div class="skill-name">Développement Web</div>
+      <div class="skill-desc">HTML, CSS, JavaScript — création de pages web modernes et responsives.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+    </div>
+    
+    <div class="skill-card reveal">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Analyse de données</div>
+      <div class="skill-desc">Excel, Python, visualisation et interprétation de données complexes.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🗣️</div>
+      <div class="skill-name">Communication</div>
+      <div class="skill-desc">Présentation claire d'idées, rédaction professionnelle en français et anglais.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤝</div>
+      <div class="skill-name">Travail en équipe</div>
+      <div class="skill-desc">Collaboration efficace, gestion de projet agile et leadership.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">Résolution de problèmes</div>
+      <div class="skill-desc">Approche analytique et créative face aux défis techniques et organisationnels.</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="projets">
+  <p class="section-tag">✦ Ce que j'ai réalisé</p>
+  <h2 class="section-title">Mes Projets Personnels</h2>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb t1">🌐</div>
+      <div class="project-body">
+        <p class="project-tag">Développement Web</p>
+        <h3 class="project-title">Site boutique cosmitéque </h3>
+        <p class="project-desc">Création d'un site web e-commerce .</p>
+        
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb t2">📱</div>
+      <div class="project-body">
+        <p class="project-tag">Application Mobile</p>
+        <h3 class="project-title">App de Gestion de Tâches</h3>
+        <p class="project-desc">Application simple de gestion de tâches quotidiennes avec notifications et suivi de progression.</p>
+        
+      </div>
+    </div>
+   
+  </div>
+</section>
+
+<section id="formations">
+  <p class="section-tag">✦ Mon parcours</p>
+  <h2 class="section-title">Formations & Expériences</h2>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2025</div>
+      <div class="timeline-content">
+        <h3 class="timeline-title"> Deuxieme annee Licence en Informatique</h3>
+        <p class="timeline-sub">Université — Tizou-ouzou </p>
+        <p class="timeline-desc">Formation en développement logiciel, algorithmes, bases de données et réseaux.</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2025</div>
+      <div class="timeline-content">
+        <h3 class="timeline-title">Formation en Mraketing et Gestion des ventes</h3>
+        <p class="timeline-sub">SIYB — Tizou-ouzou</p>
+        <p class="timeline-desc">acquérir des compétences dans le domaine du commerce , communication , la stratégie commerciale  .</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2024-2025</div>
+      <div class="timeline-content">
+        <h3 class="timeline-title">1ére année Licence  en Informatique  </h3>
+        <p class="timeline-sub">Université  — Tizi-ouzou </p>
+        <p class="timeline-desc">Formation en algorithme ,structure machine , analyse .</p>
+      </div>
+    </div>
+     <div class="timeline-item reveal">
+      <div class="timeline-year">2024</div>
+      <div class="timeline-content">
+        <h3 class="timeline-title">1ere année Véterinaine </h3>
+        <p class="timeline-sub">ecole nationale sup Véterinaine — Alger</p>
+        <p class="timeline-desc">secteur consacré a la santé et au bien-etre des animaux .</p>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-year">2023</div>
+      <div class="timeline-content">
+        <h3 class="timeline-title">Baccalauréat Scientifique</h3>
+        <p class="timeline-sub">Lycée — Tizi-ouzou</p>
+        <p class="timeline-desc">Spécialisation en  sciences. Obtention du baccalauréat avec mention  bien.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="contact">
+  <p class="section-tag">✦ Restons en contact</p>
+  <h2 class="section-title">Me Contacter</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p>Je suis toujours ouvert aux nouvelles opportunités, collaborations ou simplement à échanger autour d'un projet. N'hésitez pas à me laisser un message.</p>
+      <div class="contact-detail">
+        <div class="icon">📧</div>
+        <span>celinebelkhis@gmail.com</span>
+      </div>
+      <div class="contact-detail">
+        <div class="icon">📍</div>
+        <span>Tizi-ouzou , Algérie</span>
+      </div>
+      
+      
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="nom">Nom complet</label>
+        <input type="text" id="nom" placeholder="Votre nom" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Adresse e-mail</label>
+        <input type="email" id="email" placeholder="votre@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="sujet">Sujet</label>
+        <input type="text" id="sujet" placeholder="De quoi souhaitez-vous parler ?">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Votre message..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Envoyer le message →</button>
+      <p id="form-success" style="display:none;color:#b5451b;font-size:.9rem;margin-top:.5rem;">✓ Message envoyé avec succès !</p>
+    </form>
+  </div>
+</section>
+
+
+<footer>
+  <div class="logo">Mon<span style="color:var(--rust);font-style:italic">Portfolio</span></div>
+ 
+</footer>
+
+<script>
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'block';
+    e.target.reset();
+    setTimeout(() => { document.getElementById('form-success').style.display = 'none'; }, 4000);
+  }
+</script>
+</body>
+</html>
